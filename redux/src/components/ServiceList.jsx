@@ -1,12 +1,12 @@
 import {useSelector, useDispatch} from 'react-redux';
 import {removeService, editService} from '../provider/action/actionCreators';
-
+import { List, Button } from 'antd';
 
 export default function ServiceList() {
     const items = useSelector(state => state.serviceList);
- 
+
     const dispatch = useDispatch();
-    const handleRemove = id => {
+    const handleRemove = id => { 
  
         dispatch(removeService(id));
     }
@@ -22,14 +22,21 @@ export default function ServiceList() {
     }
 
     return (
-        <ul>
-            {items.map(o => (
-                <li key={o.id}>
-                    {o.name} {o.price}
-                    <button onClick={() => handleRemove(o.id)}>✕</button>
-                    <button onClick={() => handleEdit(o)} type='button'>Edit</button>
-                </li>
-            ))}
-        </ul>
+        <List
+            className='service-list'
+            itemLayout="horizontal"
+            dataSource={items}
+            renderItem={(item) => (
+            <List.Item>
+                <List.Item.Meta
+                    title={item.name}
+                    description={item.price}
+                />
+                <Button onClick={() => handleRemove(item.id)}>✕</Button>
+                <Button onClick={() => handleEdit(item)} >Edit</Button>
+            </List.Item>
+            )}
+        />
 )
 }
+
