@@ -25,7 +25,7 @@ export default function serviceListReducer(state = initialState, action) {
             state = state.filter(service => service.id !== id);
             return  state
         
-        case FILTER_SERVICE:
+        case FILTER_SERVICE: 
             //вот здесь проблемка если я не сравниваю state с initState 
             //то фильтр почему-то после первого ввода значения в инпут
             // полностью стирает state и дальше выдает только пустой массив.
