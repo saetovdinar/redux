@@ -3,7 +3,9 @@ import {removeService, editService} from '../provider/action/actionCreators';
 import { List, Button } from 'antd';
 
 export default function ServiceList() {
-    const items = useSelector(state => state.serviceList);
+    const filter = useSelector(state => state.serviceList.filters.filterValue);
+    const items = useSelector(state => state.serviceList.items);
+    
 
     const dispatch = useDispatch();
     const handleRemove = id => { 
@@ -22,20 +24,26 @@ export default function ServiceList() {
     }
 
     return (
+        
         <List
             className='service-list'
             itemLayout="horizontal"
             dataSource={items}
-            renderItem={(item) => (
-            <List.Item>
-                <List.Item.Meta
-                    title={item.name}
-                    description={item.price}
-                />
-                <Button onClick={() => handleRemove(item.id)}>✕</Button>
-                <Button onClick={() => handleEdit(item)} >Edit</Button>
-            </List.Item>
-            )}
+            renderItem={(item) => {
+                    if(item.name.includes(filter)) {
+                        return (
+                            <List.Item>
+                                <List.Item.Meta
+                                    title={item.name}
+                                    description={item.price}
+                                />
+                                <Button onClick={() => handleRemove(item.id)}>✕</Button>
+                                <Button onClick={() => handleEdit(item)} >Edit</Button>
+                            </List.Item>
+                            )
+                    }   
+        }
+        }
         />
 )
 }
